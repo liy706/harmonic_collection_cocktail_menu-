@@ -34,7 +34,6 @@ body{
   overflow-y:auto;
   cursor:none;
 }
-
 #custom-cursor{
   position:fixed;
   width:80px;
@@ -60,7 +59,6 @@ body::before{
   0%, 100%{opacity:0.5;transform:scale(1);}
   50%{opacity:0.8;transform:scale(1.1);}
 }
-
 .back-btn{
   position:fixed;
   top:2rem;
@@ -92,7 +90,6 @@ body::before{
   content:'←';
   font-size:1.2rem;
 }
-
 .container{
   display:flex;
   gap:3rem;
@@ -103,7 +100,6 @@ body::before{
   position:relative;
   z-index:1;
 }
-
 .cocktail-image{
   flex:1;
   max-width:500px;
@@ -123,7 +119,6 @@ body::before{
   0%, 100%{transform:translateY(0);}
   50%{transform:translateY(-20px);}
 }
-
 .decorations{
   position:fixed;
   inset:0;
@@ -131,7 +126,6 @@ body::before{
   pointer-events:none;
   overflow:hidden;
 }
-
 .bee{
   position:absolute;
   font-size:2rem;
@@ -164,7 +158,6 @@ body::before{
   left:-50px;
   animation-delay:12s;
 }
-
 .honey{
   position:absolute;
   font-size:2.5rem;
@@ -207,7 +200,6 @@ body::before{
   0%, 100%{transform:translateY(0) rotate(0deg);opacity:0.25;}
   50%{transform:translateY(-30px) rotate(10deg);opacity:0.4;}
 }
-
 @media (max-width:1024px){
   .container{
     flex-direction:column;
@@ -251,7 +243,6 @@ body::before{
 .stripes .honey{background:var(--honey);}
 .card:hover .gin{transform:translateX(-4px);}
 .card:hover .honey{transform:translateX(4px);}
-
 .card::after{
   content:'';
   position:absolute;
@@ -269,7 +260,6 @@ body::before{
   0%, 100%{opacity:0.3;transform:scale(1);}
   50%{opacity:0.6;transform:scale(1.2);}
 }
-
 .content{
   position:relative;
   z-index:2;
@@ -354,7 +344,6 @@ small{
 }
 @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
-
 @media (max-width:1024px){
   .container{
     flex-direction:column;
@@ -369,9 +358,8 @@ small{
 }
 </style>
 </head>
-
 <body>
-<a href="home.html" class="back-btn">Back to Menu</a>
+<a href="index.html" class="back-btn">Back to Menu</a>
 <div class="decorations">
   <div class="bee">🐝</div>
   <div class="bee">🐝</div>
@@ -391,25 +379,22 @@ small{
     <span class="lemon"></span>
     <span class="honey"></span>
   </div>
-
   <div class="content">
     <div>
       <span class="badge">Gin Based</span>
-      <h2>Bee’s Knees</h2>
+      <h2>Bee's Knees</h2>
     </div>
-
     <p class="story">
       1927, Paris speakeasies.<br>
       Bathtub gin masked with honey and lemon, a bright major-sixth leap that made the bitter base sing.<br>
       Three sips and the Roaring Twenties buzz back to life—sweet, sharp, effortlessly cool.
     </p>
-
     <div class="footer">
       <span class="ratio">2 : 1 : ¾</span>
       <details>
         <summary>▶ View Recipe</summary>
         <div class="recipe">
-          <h3>Bee’s Knees Lead Sheet</h3>
+          <h3>Bee's Knees Lead Sheet</h3>
           <p>Dry gin 60 ml</p>
           <p>Fresh lemon juice 30 ml</p>
           <p>Honey syrup 22 ml</p>
@@ -424,7 +409,6 @@ small{
   </div>
 </div>
 <div id="custom-cursor"></div>
-
 <script>
 const body = document.body;
 const cursor = document.getElementById('custom-cursor');
@@ -432,12 +416,10 @@ let mouseX = 0;
 let mouseY = 0;
 let cursorX = 0;
 let cursorY = 0;
-
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 });
-
 const card = document.querySelector('.card');
 if(card){
   card.addEventListener('mouseenter', () => {
@@ -449,13 +431,11 @@ if(card){
     cursor.style.height = '80px';
   });
 }
-
 function animate() {
   cursorX += (mouseX - cursorX) * 0.3;
   cursorY += (mouseY - cursorY) * 0.3;
   cursor.style.left = cursorX + 'px';
   cursor.style.top = cursorY + 'px';
-  
   requestAnimationFrame(animate);
 }
 animate();
