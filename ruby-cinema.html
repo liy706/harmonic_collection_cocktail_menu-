@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruby Cinema | Harmonic Collection Cocktail Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#c20114;
+  --pink:#ff6b9d;
+  --cream:#c94a6b;
+  --dark:#2b0504;
+  --gap:1.5rem;
+  --radius:1rem;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at 20% 30%, rgba(194,1,20,0.3), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255,107,157,0.2), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,230,240,0.15), transparent 60%),
+    var(--dark);
+  color:#fff;
+  font-family:monospace;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:var(--gap);
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(194,1,20,0.1), transparent 70%);
+  animation:pulse 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes pulse{
+  0%, 100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:0.8;transform:scale(1.1);}
+}
+.ingredient-decoration{
+  position:fixed;
+  width:180px;
+  height:180px;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity:0.6;
+  z-index:0;
+  pointer-events:none;
+}
+.ingredient-decoration.raspberry{
+  background-image:url('raspberry.png');
+  top:15%;
+  left:-200px;
+  animation:fly-across 20s linear infinite;
+  animation-delay:0s;
+}
+.ingredient-decoration.pomegranate{
+  background-image:url('pomegranate.png');
+  top:35%;
+  left:-200px;
+  animation:fly-across 22s linear infinite;
+  animation-delay:3s;
+}
+.ingredient-decoration.pomegranate-segment{
+  background-image:url('pomegranate-segment.png');
+  top:55%;
+  left:-200px;
+  animation:fly-across 18s linear infinite;
+  animation-delay:6s;
+}
+.ingredient-decoration.vodka{
+  background-image:url('vodka.png');
+  top:20%;
+  left:-200px;
+  animation:fly-across 25s linear infinite;
+  animation-delay:2s;
+}
+.ingredient-decoration.baileys{
+  background-image:url('baileys.png');
+  top:70%;
+  left:-200px;
+  animation:fly-across 24s linear infinite;
+  animation-delay:8s;
+}
+.ingredient-decoration.cream{
+  background-image:url('cream.png');
+  top:50%;
+  left:-200px;
+  animation:fly-across 19s linear infinite;
+  animation-delay:4s;
+}
+@keyframes fly-across{
+  0%{transform:translateX(0) translateY(0) rotate(0deg);}
+  5%{transform:translateX(200px) translateY(0) rotate(0deg);}
+  25%{transform:translateX(25vw) translateY(-50px) rotate(90deg);}
+  50%{transform:translateX(50vw) translateY(50px) rotate(180deg);}
+  75%{transform:translateX(75vw) translateY(-30px) rotate(270deg);}
+  100%{transform:translateX(100vw) translateY(0) rotate(360deg);}
+}
+.back-btn{
+  position:fixed;
+  top:2rem;
+  left:2rem;
+  z-index:10;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  text-decoration:none;
+  font-size:0.9rem;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.back-btn:hover{
+  background:rgba(0,0,0,0.9);
+  transform:translateX(-5px);
+  border-color:var(--pink);
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+.container{
+  display:flex;
+  gap:3rem;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:1400px;
+  position:relative;
+  z-index:1;
+}
+.cocktail-image{
+  flex:1;
+  max-width:600px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+.cocktail-image img{
+  width:100%;
+  max-width:550px;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+@keyframes float-image{
+  0%{transform:translate(0, 0) rotate(0deg);}
+  25%{transform:translate(40px, -50px) rotate(5deg);}
+  50%{transform:translate(-35px, -60px) rotate(-5deg);}
+  75%{transform:translate(-40px, -40px) rotate(3deg);}
+  100%{transform:translate(0, 0) rotate(0deg);}
+}
+@media (max-width:1024px){
+  .container{
+    flex-direction:column;
+    gap:2rem;
+  }
+  .cocktail-image{
+    max-width:100%;
+  }
+  .cocktail-image img{
+    max-width:400px;
+  }
+}
+.card{
+  flex:1;
+  max-width:420px;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+.stripes{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+}
+.stripes span{
+  flex:1;
+  transition:transform .35s ease;
+}
+.stripes .red{background:var(--red);}
+.stripes .pink{background:var(--pink);}
+.stripes .cream{background:var(--cream);}
+.card:hover .red{transform:translateX(-4px);}
+.card:hover .cream{transform:translateX(4px);}
+
+.content{
+  position:relative;
+  z-index:2;
+  padding:var(--gap);
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.content > div:first-child{
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--dark);
+  padding:.4rem .6rem;
+  border-radius:.25rem;
+  font-size:.75rem;
+  font-weight:600;
+  width:fit-content;
+}
+h2{
+  font-size:1.75rem;
+  margin:0;
+  line-height:1.2;
+  font-family:"Limelight", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.story{
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:1.15rem;
+  line-height:1.8;
+  margin:0;
+  text-align:justify;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:0.5rem;
+}
+.ratio{
+  font-size:.9rem;
+  color:#ccc;
+  font-weight:500;
+}
+
+details{
+  display:inline-block;
+}
+summary{
+  list-style:none;
+  background:var(--pink);
+  color:#000;
+  padding:.5rem 1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  border-radius:.25rem;
+  cursor:pointer;
+  transition:background .25s;
+}
+summary:hover{background:#fff;}
+summary::-webkit-details-marker{display:none}
+
+.recipe{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid var(--pink);
+  border-radius:.5rem;
+  background:rgba(0,0,0,.5);
+}
+.recipe h3{font-size:1.1rem;margin-bottom:.5rem}
+.recipe p{margin:.25rem 0}
+small{display:block;margin-top:.5rem;color:#aaa}
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+</style>
+</head>
+
+<body>
+<a href="home.html" class="back-btn">Back to Menu</a>
+<div class="ingredient-decoration raspberry"></div>
+<div class="ingredient-decoration pomegranate"></div>
+<div class="ingredient-decoration pomegranate-segment"></div>
+<div class="ingredient-decoration vodka"></div>
+<div class="ingredient-decoration baileys"></div>
+<div class="ingredient-decoration cream"></div>
+<div class="container">
+  <div class="card">
+  <div class="stripes">
+    <span class="red"></span>
+    <span class="pink"></span>
+    <span class="cream"></span>
+  </div>
+
+  <div class="content">
+    <div>
+      <span class="badge">No.01 Dessert Cocktail</span>
+      <h2>Ruby Cinema</h2>
+    </div>
+
+    <p class="story">
+    Ruby Cinema is a layered dessert cocktail with raspberry, pomegranate, crème de cacao, vodka, and rose-scented cream.<br>
+    <br>
+    Fruity brightness blends into chocolate and cream, like a drinkable red movie.
+    </p>
+
+    <div class="footer">
+      <span class="ratio">Layered</span>
+      <details>
+        <summary>▶ View Recipe</summary>
+        <div class="recipe">
+          <h3>Ruby Cinema Recipe</h3>
+          <p>Raspberry & Pomegranate (base layer)</p>
+          <p>Crème de Cacao 20 ml</p>
+          <p>Vodka 30 ml</p>
+          <p>Rose-scented cream float (top)</p>
+          <small>Layer carefully / Serve in goblet / Garnish with chocolate</small>
+        </div>
+      </details>
+    </div>
+  </div>
+  </div>
+  <div class="cocktail-image">
+    <img src="cocktail5.png" alt="Ruby Cinema Cocktail">
+  </div>
+</div>
+</body>
+</html>
+
+

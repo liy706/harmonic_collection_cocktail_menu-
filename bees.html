@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bee's Knees | Harmonic Collection Cocktail Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+:root{
+  --honey:#f5b700;
+  --lemon:#ffe66d;
+  --gin:#2a9d8f;
+  --dark:#1d1d1d;
+  --gap:1.5rem;
+  --radius:1rem;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at 30% 20%, rgba(245,183,0,0.25), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(42,157,143,0.2), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,230,109,0.15), transparent 60%),
+    var(--dark);
+  color:#fff;
+  font-family:monospace;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:var(--gap);
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:auto;
+  cursor:none;
+}
+
+#custom-cursor{
+  position:fixed;
+  width:80px;
+  height:80px;
+  background-image:url('cursor-honey.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  z-index:9999;
+  transition:width 0.3s ease, height 0.3s ease;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(245,183,0,0.1), transparent 70%);
+  animation:pulse 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes pulse{
+  0%, 100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:0.8;transform:scale(1.1);}
+}
+
+.back-btn{
+  position:fixed;
+  top:2rem;
+  left:2rem;
+  z-index:10;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  text-decoration:none;
+  font-size:0.9rem;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.back-btn:hover{
+  background:rgba(0,0,0,0.9);
+  transform:translateX(-5px);
+  border-color:var(--honey);
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+
+.container{
+  display:flex;
+  gap:3rem;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:1400px;
+  position:relative;
+  z-index:1;
+}
+
+.cocktail-image{
+  flex:1;
+  max-width:500px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cocktail-image img{
+  width:100%;
+  max-width:400px;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  animation:float-image 6s ease-in-out infinite;
+}
+@keyframes float-image{
+  0%, 100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+
+.decorations{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.bee{
+  position:absolute;
+  font-size:2rem;
+  opacity:0.85;
+  filter:brightness(1.1) contrast(1.2);
+  animation:fly 15s linear infinite;
+}
+.bee:nth-child(1){
+  top:15%;
+  left:-50px;
+  animation-delay:0s;
+}
+.bee:nth-child(2){
+  top:45%;
+  left:-50px;
+  animation-delay:3s;
+}
+.bee:nth-child(3){
+  top:70%;
+  left:-50px;
+  animation-delay:6s;
+}
+.bee:nth-child(4){
+  top:30%;
+  left:-50px;
+  animation-delay:9s;
+}
+.bee:nth-child(5){
+  top:85%;
+  left:-50px;
+  animation-delay:12s;
+}
+
+.honey{
+  position:absolute;
+  font-size:2.5rem;
+  opacity:0.25;
+  animation:float 8s ease-in-out infinite;
+}
+.honey:nth-child(6){
+  top:10%;
+  right:10%;
+  animation-delay:0s;
+}
+.honey:nth-child(7){
+  top:50%;
+  right:5%;
+  animation-delay:2s;
+}
+.honey:nth-child(8){
+  bottom:15%;
+  right:15%;
+  animation-delay:4s;
+}
+.honey:nth-child(9){
+  top:25%;
+  left:5%;
+  animation-delay:1s;
+}
+.honey:nth-child(10){
+  bottom:25%;
+  left:10%;
+  animation-delay:3s;
+}
+@keyframes fly{
+  0%{transform:translateX(0) translateY(0) rotate(0deg);}
+  25%{transform:translateX(25vw) translateY(-50px) rotate(90deg);}
+  50%{transform:translateX(50vw) translateY(50px) rotate(180deg);}
+  75%{transform:translateX(75vw) translateY(-30px) rotate(270deg);}
+  100%{transform:translateX(100vw) translateY(0) rotate(360deg);}
+}
+@keyframes float{
+  0%, 100%{transform:translateY(0) rotate(0deg);opacity:0.25;}
+  50%{transform:translateY(-30px) rotate(10deg);opacity:0.4;}
+}
+
+@media (max-width:1024px){
+  .container{
+    flex-direction:column;
+    gap:2rem;
+  }
+  .cocktail-image{
+    max-width:100%;
+  }
+  .cocktail-image img{
+    max-width:300px;
+  }
+}
+.card{
+  flex:1;
+  max-width:420px;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  z-index:1;
+  box-shadow:0 20px 60px rgba(0,0,0,.8), 0 0 40px rgba(245,183,0,0.3);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 25px 70px rgba(0,0,0,.9), 0 0 60px rgba(245,183,0,0.5);
+}
+.stripes{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  border-radius:var(--radius);
+}
+.stripes span{
+  flex:1;
+  transition:transform .35s ease;
+}
+.stripes .gin{background:var(--gin);}
+.stripes .lemon{background:var(--lemon);}
+.stripes .honey{background:var(--honey);}
+.card:hover .gin{transform:translateX(-4px);}
+.card:hover .honey{transform:translateX(4px);}
+
+.card::after{
+  content:'';
+  position:absolute;
+  top:20%;
+  right:10%;
+  width:100px;
+  height:100px;
+  background:radial-gradient(circle, rgba(245,183,0,0.3), transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:1;
+  animation:sparkle 3s ease-in-out infinite;
+}
+@keyframes sparkle{
+  0%, 100%{opacity:0.3;transform:scale(1);}
+  50%{opacity:0.6;transform:scale(1.2);}
+}
+
+.content{
+  position:relative;
+  z-index:2;
+  padding:var(--gap);
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--dark);
+  padding:.25rem .5rem;
+  border-radius:.25rem;
+  font-size:.75rem;
+  font-weight:600;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+h2{
+  font-size:1.75rem;
+  margin:.5rem 0 0;
+  color:#fff;
+  text-shadow:0 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(245,183,0,0.5);
+  font-family:"Limelight", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.story{
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:1.15rem;
+  line-height:1.8;
+  margin:1rem 0 1.5rem;
+  color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.7);
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.ratio{
+  font-size:.9rem;
+  color:#fff;
+  text-shadow:0 1px 5px rgba(0,0,0,0.8);
+  font-weight:500;
+}
+details{display:inline-block}
+summary{
+  list-style:none;
+  background:var(--honey);
+  color:#000;
+  padding:.5rem 1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  border-radius:.25rem;
+  cursor:pointer;
+  transition:background .25s;
+}
+summary:hover{background:#fff}
+summary::-webkit-details-marker{display:none}
+.recipe{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid var(--honey);
+  border-radius:.5rem;
+  background:rgba(0,0,0,0.8);
+}
+.recipe h3{
+  font-size:1.1rem;
+  margin-bottom:.5rem;
+  color:#fff;
+  text-shadow:0 1px 5px rgba(0,0,0,0.8);
+}
+.recipe p{
+  margin:.25rem 0;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,0.8);
+}
+small{
+  display:block;
+  margin-top:.5rem;
+  color:#fff;
+  opacity:0.9;
+  text-shadow:0 1px 3px rgba(0,0,0,0.8);
+}
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+
+@media (max-width:1024px){
+  .container{
+    flex-direction:column;
+    gap:2rem;
+  }
+  .cocktail-image{
+    max-width:100%;
+  }
+  .cocktail-image img{
+    max-width:300px;
+  }
+}
+</style>
+</head>
+
+<body>
+<a href="home.html" class="back-btn">Back to Menu</a>
+<div class="decorations">
+  <div class="bee">🐝</div>
+  <div class="bee">🐝</div>
+  <div class="bee">🐝</div>
+  <div class="bee">🐝</div>
+  <div class="bee">🐝</div>
+  <div class="honey">🍯</div>
+  <div class="honey">🍯</div>
+  <div class="honey">🍯</div>
+  <div class="honey">🍯</div>
+  <div class="honey">🍯</div>
+</div>
+<div class="container">
+  <div class="card">
+  <div class="stripes">
+    <span class="gin"></span>
+    <span class="lemon"></span>
+    <span class="honey"></span>
+  </div>
+
+  <div class="content">
+    <div>
+      <span class="badge">Gin Based</span>
+      <h2>Bee’s Knees</h2>
+    </div>
+
+    <p class="story">
+      1927, Paris speakeasies.<br>
+      Bathtub gin masked with honey and lemon, a bright major-sixth leap that made the bitter base sing.<br>
+      Three sips and the Roaring Twenties buzz back to life—sweet, sharp, effortlessly cool.
+    </p>
+
+    <div class="footer">
+      <span class="ratio">2 : 1 : ¾</span>
+      <details>
+        <summary>▶ View Recipe</summary>
+        <div class="recipe">
+          <h3>Bee’s Knees Lead Sheet</h3>
+          <p>Dry gin 60 ml</p>
+          <p>Fresh lemon juice 30 ml</p>
+          <p>Honey syrup 22 ml</p>
+          <small>Shake / Coupe / Lemon twist</small>
+        </div>
+      </details>
+    </div>
+  </div>
+  </div>
+  <div class="cocktail-image">
+    <img src="bees.png" alt="Bee's Knees Cocktail">
+  </div>
+</div>
+<div id="custom-cursor"></div>
+
+<script>
+const body = document.body;
+const cursor = document.getElementById('custom-cursor');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+const card = document.querySelector('.card');
+if(card){
+  card.addEventListener('mouseenter', () => {
+    cursor.style.width = '100px';
+    cursor.style.height = '100px';
+  });
+  card.addEventListener('mouseleave', () => {
+    cursor.style.width = '80px';
+    cursor.style.height = '80px';
+  });
+}
+
+function animate() {
+  cursorX += (mouseX - cursorX) * 0.3;
+  cursorY += (mouseY - cursorY) * 0.3;
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top = cursorY + 'px';
+  
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>

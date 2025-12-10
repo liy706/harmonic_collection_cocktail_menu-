@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bloody Mary | Harmonic Collection Cocktail Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tomato:#c20114;
+  --celery:#7fcdcd;
+  --pepper:#4f0000;
+  --dark:#1d1d1d;
+  --gap:1.5rem;
+  --radius:1rem;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at 20% 30%, rgba(194,1,20,0.3), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(127,205,205,0.2), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(79,0,0,0.15), transparent 60%),
+    var(--dark);
+  color:#fff;
+  font-family:monospace;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:var(--gap);
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:auto;
+  cursor:none;
+}
+#custom-cursor{
+  position:fixed;
+  width:60px;
+  height:60px;
+  background-image:url('tomato.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  z-index:9999;
+  transition:width 0.3s ease, height 0.3s ease;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(194,1,20,0.1), transparent 70%);
+  animation:pulse 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes pulse{
+  0%, 100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:0.8;transform:scale(1.1);}
+}
+.back-btn{
+  position:fixed;
+  top:2rem;
+  left:2rem;
+  z-index:10;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  text-decoration:none;
+  font-size:0.9rem;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.back-btn:hover{
+  background:rgba(0,0,0,0.9);
+  transform:translateX(-5px);
+  border-color:var(--tomato);
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+.container{
+  display:flex;
+  gap:3rem;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:1400px;
+  position:relative;
+  z-index:1;
+}
+.cocktail-image{
+  flex:1;
+  max-width:500px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:2;
+}
+.cocktail-image img{
+  width:100%;
+  max-width:400px;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  animation:float-image 8s ease-in-out infinite;
+  cursor:grab;
+  transition:transform 0.1s ease-out, opacity 0.3s ease;
+  position:relative;
+  z-index:3;
+  user-select:none;
+  -webkit-user-drag:none;
+  touch-action:none;
+}
+.cocktail-image img:active{
+  cursor:grabbing;
+  animation:none;
+}
+.cocktail-image img.dragging{
+  cursor:grabbing;
+  animation:none;
+  transition:none;
+}
+.cocktail-image img.transforming{
+  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  transform:scale(1.1);
+}
+.cocktail-image img.hidden{
+  opacity:0;
+  transform:scale(0.8) rotate(180deg);
+}
+@keyframes float-image{
+  0%{transform:translate(0, 0) rotate(0deg);}
+  25%{transform:translate(40px, -50px) rotate(5deg);}
+  50%{transform:translate(-35px, -60px) rotate(-5deg);}
+  75%{transform:translate(-40px, -40px) rotate(3deg);}
+  100%{transform:translate(0, 0) rotate(0deg);}
+}
+@media (max-width:1024px){
+  .container{
+    flex-direction:column;
+    gap:2rem;
+  }
+  .cocktail-image{
+    max-width:100%;
+  }
+  .cocktail-image img{
+    max-width:300px;
+  }
+}
+.card{
+  flex:1;
+  max-width:420px;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+.stripes{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+}
+.stripes span{
+  flex:1;
+  transition:transform .35s ease;
+}
+.stripes .pepper{background:var(--pepper);}
+.stripes .tomato{background:var(--tomato);}
+.stripes .celery{background:var(--celery);}
+.card:hover .pepper{transform:translateX(-4px);}
+.card:hover .celery{transform:translateX(4px);}
+
+.content{
+  position:relative;
+  z-index:2;
+  padding:var(--gap);
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--dark);
+  padding:.25rem .5rem;
+  border-radius:.25rem;
+  font-size:.75rem;
+}
+h2{
+  font-size:1.75rem;
+  margin:.5rem 0 0;
+  font-family:"Limelight", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.story{
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:1.15rem;
+  line-height:1.8;
+  margin:1rem 0 1.5rem;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.ratio{font-size:.9rem;color:#ccc}
+details{display:inline-block}
+summary{
+  list-style:none;
+  background:var(--tomato);
+  color:#fff;
+  padding:.5rem 1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  border-radius:.25rem;
+  cursor:pointer;
+  transition:background .25s;
+}
+summary:hover{background:#fff;color:var(--dark)}
+summary::-webkit-details-marker{display:none}
+.recipe{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid var(--tomato);
+  border-radius:.5rem;
+  background:rgba(0,0,0,.5);
+}
+.recipe h3{font-size:1.1rem;margin-bottom:.5rem}
+.recipe p{margin:.25rem 0}
+small{display:block;margin-top:.5rem;color:#aaa}
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+.tomato-scatter{
+  position:fixed;
+  width:60px;
+  height:60px;
+  background-image:url('tomato.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  pointer-events:none;
+  z-index:1;
+  opacity:0;
+  will-change:transform, opacity;
+}
+</style>
+</head>
+
+<body>
+<a href="home.html" class="back-btn">Back to Menu</a>
+<div class="container">
+  <div class="card">
+  <div class="stripes">
+    <span class="pepper"></span>
+    <span class="tomato"></span>
+    <span class="celery"></span>
+  </div>
+
+  <div class="content">
+    <div>
+      <span class="badge">Vodka Based</span>
+      <h2>Bloody Mary</h2>
+    </div>
+
+    <p class="story">
+      1921, Paris, Harry’s New York Bar.<br>
+      Fernand Petiot swapped champagne for tomato juice, spiking it with spices and a whisper of vodka.<br>
+      Three sips and the tritone rings—savory, sharp, endlessly unresolved—perfect for the morning after.
+    </p>
+
+    <div class="footer">
+      <span class="ratio">2 : 3 : ½</span>
+      <details>
+        <summary>▶ View Recipe</summary>
+        <div class="recipe">
+          <h3>Bloody Mary Lead Sheet</h3>
+          <p>Vodka 45 ml</p>
+          <p>Tomato juice 60 ml</p>
+          <p>Fresh lemon juice 15 ml</p>
+          <small>Roll / Highball / Celery stalk & lemon wedge</small>
+        </div>
+      </details>
+    </div>
+  </div>
+  </div>
+  <div class="cocktail-image">
+    <img src="bloody-mary.png" alt="Bloody Mary Cocktail">
+  </div>
+</div>
+<div id="custom-cursor"></div>
+
+<script>
+const body = document.body;
+const cursor = document.getElementById('custom-cursor');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+const card = document.querySelector('.card');
+if(card){
+  card.addEventListener('mouseenter', () => {
+    cursor.style.width = '80px';
+    cursor.style.height = '80px';
+  });
+  card.addEventListener('mouseleave', () => {
+    cursor.style.width = '60px';
+    cursor.style.height = '60px';
+  });
+}
+
+function animate() {
+  cursorX += (mouseX - cursorX) * 0.3;
+  cursorY += (mouseY - cursorY) * 0.3;
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top = cursorY + 'px';
+  
+  requestAnimationFrame(animate);
+}
+animate();
+
+const cocktailImage = document.querySelector('.cocktail-image img');
+let isDragging = false;
+let currentX = 0;
+let currentY = 0;
+let initialX = 0;
+let initialY = 0;
+let xOffset = 0;
+let yOffset = 0;
+let velocityX = 0;
+let velocityY = 0;
+let lastX = 0;
+let lastY = 0;
+let lastTime = 0;
+let animationFrame = null;
+let clickStartTime = 0;
+let clickStartX = 0;
+let clickStartY = 0;
+
+if(cocktailImage) {
+  cocktailImage.addEventListener('mousedown', function(e) {
+    dragStart(e);
+    clickStartTime = Date.now();
+    clickStartX = e.clientX;
+    clickStartY = e.clientY;
+  });
+  
+  document.addEventListener('mousemove', drag);
+  
+  document.addEventListener('mouseup', function(e) {
+    dragEnd(e);
+    const clickDuration = Date.now() - clickStartTime;
+    const moveDistance = Math.sqrt(
+      Math.pow(e.clientX - clickStartX, 2) + 
+      Math.pow(e.clientY - clickStartY, 2)
+    );
+    if(clickDuration < 200 && moveDistance < 10) {
+      scatterTomatoes(e);
+    }
+  });
+  
+  cocktailImage.addEventListener('touchstart', function(e) {
+    dragStart(e);
+    clickStartTime = Date.now();
+    if(e.touches[0]) {
+      clickStartX = e.touches[0].clientX;
+      clickStartY = e.touches[0].clientY;
+    }
+  }, {passive: false});
+  document.addEventListener('touchmove', drag, {passive: false});
+  document.addEventListener('touchend', function(e) {
+    dragEnd(e);
+    const clickDuration = Date.now() - clickStartTime;
+    if(clickDuration < 200) {
+      scatterTomatoes(e);
+    }
+  });
+}
+
+function dragStart(e) {
+  if(e.type === 'touchstart') {
+    initialX = e.touches[0].clientX - xOffset;
+    initialY = e.touches[0].clientY - yOffset;
+  } else {
+    initialX = e.clientX - xOffset;
+    initialY = e.clientY - yOffset;
+  }
+  
+  if(e.target === cocktailImage) {
+    isDragging = true;
+    cocktailImage.classList.add('dragging');
+    lastX = initialX;
+    lastY = initialY;
+    lastTime = performance.now();
+    velocityX = 0;
+    velocityY = 0;
+    
+    if(animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+    
+    cocktailImage.style.animation = 'none';
+  }
+}
+
+function drag(e) {
+  if(isDragging) {
+    e.preventDefault();
+    
+    let clientX, clientY;
+    if(e.type === 'touchmove') {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    currentX = clientX - initialX;
+    currentY = clientY - initialY;
+    
+    const currentTime = performance.now();
+    const deltaTime = currentTime - lastTime;
+    if(deltaTime > 0 && deltaTime < 100) {
+      const deltaX = currentX - lastX;
+      const deltaY = currentY - lastY;
+      velocityX = deltaX / deltaTime * 1000;
+      velocityY = deltaY / deltaTime * 1000;
+    }
+    
+    xOffset = currentX;
+    yOffset = currentY;
+    
+    setTranslate(currentX, currentY, cocktailImage);
+    
+    checkRightTopCorner();
+    
+    lastX = currentX;
+    lastY = currentY;
+    lastTime = currentTime;
+  }
+}
+
+function checkRightTopCorner() {
+  const rect = cocktailImage.getBoundingClientRect();
+  const imageCenterX = rect.left + rect.width / 2;
+  const imageCenterY = rect.top + rect.height / 2;
+  
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  
+  const cornerWidth = windowWidth * 0.25;
+  const cornerHeight = windowHeight * 0.25;
+  const rightEdge = windowWidth - cornerWidth;
+  const topEdge = cornerHeight;
+  
+  if(imageCenterX >= rightEdge && imageCenterY <= topEdge) {
+    const currentSrc = cocktailImage.src || cocktailImage.getAttribute('src');
+    if(currentSrc && !currentSrc.includes('cocktail5.png')) {
+      cocktailImage.src = 'cocktail5.png';
+      cocktailImage.classList.add('transforming');
+      
+      setTimeout(() => {
+        cocktailImage.classList.remove('transforming');
+      }, 300);
+    }
+  } else {
+    const currentSrc = cocktailImage.src || cocktailImage.getAttribute('src');
+    if(currentSrc && currentSrc.includes('cocktail5.png')) {
+      cocktailImage.src = 'bloody-mary.png';
+      cocktailImage.classList.add('transforming');
+      
+      setTimeout(() => {
+        cocktailImage.classList.remove('transforming');
+      }, 300);
+    }
+  }
+}
+
+function dragEnd(e) {
+  if(isDragging) {
+    isDragging = false;
+    cocktailImage.classList.remove('dragging');
+    
+    if(animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+    
+    smoothReturn();
+  }
+}
+
+function setTranslate(xPos, yPos, el) {
+  el.style.transform = `translate(${xPos}px, ${yPos}px)`;
+}
+
+function smoothReturn() {
+  const targetX = 0;
+  const targetY = 0;
+  
+  const easing = 0.2;
+  
+  function animateReturn() {
+    xOffset += (targetX - xOffset) * easing;
+    yOffset += (targetY - yOffset) * easing;
+    
+    setTranslate(xOffset, yOffset, cocktailImage);
+    
+    const distance = Math.sqrt(xOffset * xOffset + yOffset * yOffset);
+    if(distance > 0.5) {
+      animationFrame = requestAnimationFrame(animateReturn);
+    } else {
+      xOffset = 0;
+      yOffset = 0;
+      setTranslate(0, 0, cocktailImage);
+      animationFrame = null;
+      cocktailImage.style.animation = 'float-image 8s ease-in-out infinite';
+    }
+  }
+  
+  animateReturn();
+}
+
+function scatterTomatoes(e) {
+  if(!cocktailImage) return;
+  
+  const rect = cocktailImage.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2 + xOffset;
+  const centerY = rect.top + rect.height / 2 + yOffset;
+  
+  const tomatoCount = 25;
+  for(let i = 0; i < tomatoCount; i++) {
+    const tomato = document.createElement('div');
+    tomato.className = 'tomato-scatter';
+    
+    const baseAngle = (Math.PI * 2 * i) / tomatoCount;
+    const angle = baseAngle + (Math.random() - 0.5) * 0.6;
+    
+    const startDistance = 20 + Math.random() * 40;
+    const startX = Math.cos(angle + Math.PI) * startDistance;
+    const startY = Math.sin(angle + Math.PI) * startDistance;
+    
+    const popDistance = 150 + Math.random() * 100;
+    const popX = Math.cos(angle) * popDistance;
+    const popY = Math.sin(angle) * popDistance;
+    
+    const endDistance = 400 + Math.random() * 500;
+    const endX = Math.cos(angle) * endDistance;
+    const endY = Math.sin(angle) * endDistance;
+    
+    const rotation = (Math.random() - 0.5) * 1440;
+    
+    const scale = 0.5 + Math.random() * 0.4;
+    tomato.style.width = (60 * scale) + 'px';
+    tomato.style.height = (60 * scale) + 'px';
+    
+    tomato.style.left = centerX + 'px';
+    tomato.style.top = centerY + 'px';
+    
+    document.body.appendChild(tomato);
+    
+    const totalDuration = 2500 + Math.random() * 1000;
+    const delay = Math.random() * 50;
+    
+    const keyframes = [
+      {
+        transform: `translate(calc(-50% + ${startX}px), calc(-50% + ${startY}px)) rotate(0deg) scale(${scale * 0.3})`,
+        opacity: 0,
+        offset: 0
+      },
+      {
+        transform: `translate(calc(-50% + ${popX}px), calc(-50% + ${popY}px)) rotate(${rotation * 0.2}deg) scale(${scale * 1.1})`,
+        opacity: 1,
+        offset: 0.15
+      },
+      {
+        transform: `translate(calc(-50% + ${popX * 1.5}px), calc(-50% + ${popY * 1.5}px)) rotate(${rotation * 0.4}deg) scale(${scale})`,
+        opacity: 1,
+        offset: 0.3
+      },
+      {
+        transform: `translate(calc(-50% + ${endX * 0.8}px), calc(-50% + ${endY * 0.8}px)) rotate(${rotation * 0.7}deg) scale(${scale * 0.5})`,
+        opacity: 1,
+        offset: 0.85
+      },
+      {
+        transform: `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) rotate(${rotation}deg) scale(${scale * 0.2})`,
+        opacity: 0,
+        offset: 1
+      }
+    ];
+    
+    const animation = tomato.animate(keyframes, {
+      duration: totalDuration,
+      delay: delay,
+      easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      fill: 'forwards'
+    });
+    
+    animation.onfinish = () => {
+      tomato.remove();
+    };
+  }
+}
+</script>
+</body>
+</html>

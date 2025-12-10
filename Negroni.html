@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Negroni | Harmonic Collection Cocktail Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#9e2a2b;
+  --orange:#e85d04;
+  --gold:#dea800;
+  --dark:#2b0504;
+  --gap:1.5rem;
+  --radius:1rem;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at 20% 30%, rgba(158,42,43,0.3), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(232,93,4,0.2), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(222,168,0,0.15), transparent 60%),
+    var(--dark);
+  color:#fff;
+  font-family:monospace;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:var(--gap);
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:auto;
+  transition:background 0.5s ease;
+}
+
+.video-background{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+  opacity:0;
+  transition:opacity 0.5s ease;
+  pointer-events:none;
+}
+body.video-active .video-background{
+  opacity:1;
+}
+body.video-active{
+  background:var(--dark);
+}
+body.video-active::before{
+  opacity:0;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(158,42,43,0.1), transparent 70%);
+  animation:pulse 8s ease-in-out infinite;
+  z-index:0;
+}
+@keyframes pulse{
+  0%, 100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:0.8;transform:scale(1.1);}
+}
+
+.lemon-decoration{
+  position:fixed;
+  width:350px;
+  height:350px;
+  background-image:url('lemon.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity:0.85;
+  filter:brightness(0.7) contrast(1.3);
+  z-index:0;
+  pointer-events:none;
+  top:50%;
+  right:5%;
+  transform:translateY(-50%);
+  animation:lemon-float 12s ease-in-out infinite;
+}
+@keyframes lemon-float{
+  0%, 100%{transform:translateY(-50%) translate(0, 0) rotate(0deg);}
+  25%{transform:translateY(-50%) translate(-80px, -100px) rotate(20deg);}
+  50%{transform:translateY(-50%) translate(-60px, -150px) rotate(-15deg);}
+  75%{transform:translateY(-50%) translate(40px, -120px) rotate(12deg);}
+}
+
+.back-btn{
+  position:fixed;
+  top:2rem;
+  left:2rem;
+  z-index:10;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  text-decoration:none;
+  font-size:0.9rem;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.back-btn:hover{
+  background:rgba(0,0,0,0.9);
+  transform:translateX(-5px);
+  border-color:var(--orange);
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+
+.container{
+  display:flex;
+  gap:3rem;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:1400px;
+  position:relative;
+  z-index:1;
+}
+
+.cocktail-image{
+  flex:1;
+  max-width:500px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cocktail-image img{
+  width:100%;
+  max-width:400px;
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  animation:float-image 8s ease-in-out infinite;
+  cursor:grab;
+  user-select:none;
+  transition:transform 0.1s ease-out;
+}
+.cocktail-image img:active{
+  cursor:grabbing;
+  animation-play-state:paused;
+}
+.cocktail-image img.dragging{
+  animation:none;
+  cursor:grabbing;
+  transition:none;
+}
+.cocktail-image img.transforming{
+  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  transform:scale(1.1);
+}
+@keyframes float-image{
+  0%{transform:translate(0, 0) rotate(0deg);}
+  25%{transform:translate(40px, -50px) rotate(5deg);}
+  50%{transform:translate(-35px, -60px) rotate(-5deg);}
+  75%{transform:translate(-40px, -40px) rotate(3deg);}
+  100%{transform:translate(0, 0) rotate(0deg);}
+}
+
+@media (max-width:1024px){
+  .container{
+    flex-direction:column;
+    gap:2rem;
+  }
+  .cocktail-image{
+    max-width:100%;
+  }
+  .cocktail-image img{
+    max-width:300px;
+  }
+}
+
+.card{
+  flex:1;
+  max-width:420px;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  z-index:1;
+  box-shadow:0 20px 60px rgba(0,0,0,.8), 0 0 40px rgba(158,42,43,0.3);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 25px 70px rgba(0,0,0,.9), 0 0 60px rgba(158,42,43,0.5);
+}
+
+.stripes{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+}
+.stripes span{
+  flex:1;
+  transition:transform .35s ease;
+}
+.stripes .red{background:var(--red);}
+.stripes .orange{background:var(--orange);}
+.stripes .gold{background:var(--gold);}
+.card:hover .red{transform:translateX(-4px);}
+.card:hover .gold{transform:translateX(4px);}
+
+
+.card::after{
+  content:'';
+  position:absolute;
+  top:20%;
+  right:10%;
+  width:100px;
+  height:100px;
+  background:radial-gradient(circle, rgba(232,93,4,0.3), transparent 70%);
+  border-radius:50%;
+  filter:blur(20px);
+  animation:float 6s ease-in-out infinite;
+  z-index:1;
+}
+@keyframes float{
+  0%, 100%{transform:translate(0, 0) scale(1);opacity:0.5;}
+  50%{transform:translate(20px, -20px) scale(1.2);opacity:0.8;}
+}
+
+
+.content{
+  position:relative;
+  z-index:2;
+  padding:var(--gap);
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--dark);
+  padding:.25rem .5rem;
+  border-radius:.25rem;
+  font-size:.75rem;
+}
+h2{
+  font-size:1.75rem;
+  margin:.5rem 0 0;
+  background:linear-gradient(135deg, #fff 0%, var(--orange) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:0 0 20px rgba(232,93,4,0.3);
+  font-family:"Limelight", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.story{
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:1.15rem;
+  line-height:1.8;
+  margin:1rem 0 1.5rem;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.ratio{font-size:.9rem;color:#ccc}
+
+details{
+  display:inline-block;
+}
+summary{
+  list-style:none;
+  background:var(--orange);
+  color:#000;
+  padding:.5rem 1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  border-radius:.25rem;
+  cursor:pointer;
+  transition:background .25s;
+}
+summary:hover{background:#fff;}
+
+summary::-webkit-details-marker{display:none}
+
+.recipe{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid var(--orange);
+  border-radius:.5rem;
+  background:rgba(0,0,0,.5);
+}
+.recipe h3{font-size:1.1rem;margin-bottom:.5rem}
+.recipe p{margin:.25rem 0}
+small{display:block;margin-top:.5rem;color:#aaa}
+
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+</style>
+</head>
+
+<body>
+<video class="video-background" autoplay muted loop playsinline>
+  <source src="background-video.mp4" type="video/mp4">
+  <source src="background-video.webm" type="video/webm">
+</video>
+<a href="home.html" class="back-btn">Back to Menu</a>
+<div class="lemon-decoration"></div>
+<div class="container">
+  <div class="card">
+  <div class="stripes">
+    <span class="red"></span>
+    <span class="orange"></span>
+    <span class="gold"></span>
+  </div>
+
+  <div class="content">
+    <div>
+      <span class="badge">Gin Based</span>
+      <h2>Negroni</h2>
+    </div>
+
+    <p class="story">
+Count Negroni swapped the soda for gin, letting “bitter” and “bold” shake hands.<br>
+
+After three sips your tongue feels gripped by a diminished-seventh chord—momentarily weightless,<br> waiting for the next beat to resolve back to the tonic.
+    </p>
+
+    <div class="footer">
+      <span class="ratio">1 : 1 : 1</span>
+      <details>
+        <summary>▶ View Recipe</summary>
+        <div class="recipe">
+          <h3>Negroni Recipe</h3>
+          <p>Gin 30 ml</p>
+          <p>Campari 30 ml</p>
+          <p>Sweet Vermouth 30 ml</p>
+          <small>Stir / Rock glass / Orange twist</small>
+        </div>
+      </details>
+    </div>
+  </div>
+  </div>
+  <div class="cocktail-image">
+    <img src="negroni.png" alt="Negroni Cocktail">
+  </div>
+</div>
+
+<script>
+const detailsElement = document.querySelector('details');
+const videoBackground = document.querySelector('.video-background');
+const body = document.body;
+
+if(detailsElement && videoBackground){
+  detailsElement.addEventListener('toggle', function() {
+    if(this.open){
+      body.classList.add('video-active');
+      videoBackground.play();
+    } else {
+      body.classList.remove('video-active');
+      videoBackground.pause();
+    }
+  });
+}
+
+const cocktailImage = document.querySelector('.cocktail-image img');
+let isDragging = false;
+let currentX = 0;
+let currentY = 0;
+let initialX = 0;
+let initialY = 0;
+let xOffset = 0;
+let yOffset = 0;
+let velocityX = 0;
+let velocityY = 0;
+let lastX = 0;
+let lastY = 0;
+let lastTime = 0;
+let animationFrame = null;
+
+if(cocktailImage) {
+  cocktailImage.addEventListener('mousedown', dragStart);
+  
+  document.addEventListener('mousemove', drag);
+  
+  document.addEventListener('mouseup', dragEnd);
+  
+  cocktailImage.addEventListener('touchstart', dragStart, {passive: false});
+  document.addEventListener('touchmove', drag, {passive: false});
+  document.addEventListener('touchend', dragEnd);
+}
+
+function dragStart(e) {
+  if(e.type === 'touchstart') {
+    initialX = e.touches[0].clientX - xOffset;
+    initialY = e.touches[0].clientY - yOffset;
+  } else {
+    initialX = e.clientX - xOffset;
+    initialY = e.clientY - yOffset;
+  }
+  
+  if(e.target === cocktailImage) {
+    isDragging = true;
+    cocktailImage.classList.add('dragging');
+    lastX = initialX;
+    lastY = initialY;
+    lastTime = performance.now();
+    velocityX = 0;
+    velocityY = 0;
+    
+    if(animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+    
+    cocktailImage.style.animation = 'none';
+  }
+}
+
+function drag(e) {
+  if(isDragging) {
+    e.preventDefault();
+    
+    let clientX, clientY;
+    if(e.type === 'touchmove') {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    currentX = clientX - initialX;
+    currentY = clientY - initialY;
+    
+    const currentTime = performance.now();
+    const deltaTime = currentTime - lastTime;
+    if(deltaTime > 0 && deltaTime < 100) {
+      const deltaX = currentX - lastX;
+      const deltaY = currentY - lastY;
+      velocityX = deltaX / deltaTime * 1000;
+      velocityY = deltaY / deltaTime * 1000;
+    }
+    
+    xOffset = currentX;
+    yOffset = currentY;
+    
+    setTranslate(currentX, currentY, cocktailImage);
+    
+    checkRightTopCorner();
+    
+    lastX = currentX;
+    lastY = currentY;
+    lastTime = currentTime;
+  }
+}
+
+function checkRightTopCorner() {
+  const rect = cocktailImage.getBoundingClientRect();
+  const imageCenterX = rect.left + rect.width / 2;
+  const imageCenterY = rect.top + rect.height / 2;
+  
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  
+  const cornerWidth = windowWidth * 0.25;
+  const cornerHeight = windowHeight * 0.25;
+  const rightEdge = windowWidth - cornerWidth;
+  const topEdge = cornerHeight;
+  
+  if(imageCenterX >= rightEdge && imageCenterY <= topEdge) {
+    const currentSrc = cocktailImage.src || cocktailImage.getAttribute('src');
+    if(currentSrc && !currentSrc.includes('bloody.png')) {
+      cocktailImage.src = 'bloody.png';
+      cocktailImage.classList.add('transforming');
+      
+      setTimeout(() => {
+        cocktailImage.classList.remove('transforming');
+      }, 300);
+    }
+  } else {
+    const currentSrc = cocktailImage.src || cocktailImage.getAttribute('src');
+    if(currentSrc && currentSrc.includes('bloody.png')) {
+      cocktailImage.src = 'negroni.png';
+      cocktailImage.classList.add('transforming');
+      
+      setTimeout(() => {
+        cocktailImage.classList.remove('transforming');
+      }, 300);
+    }
+  }
+}
+
+function dragEnd(e) {
+  if(isDragging) {
+    isDragging = false;
+    cocktailImage.classList.remove('dragging');
+    
+    if(animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+    
+    smoothReturn();
+  }
+}
+
+function setTranslate(xPos, yPos, el) {
+  el.style.transform = `translate(${xPos}px, ${yPos}px)`;
+}
+
+function smoothReturn() {
+  const targetX = 0;
+  const targetY = 0;
+  
+  const easing = 0.2;
+  
+  function animateReturn() {
+    xOffset += (targetX - xOffset) * easing;
+    yOffset += (targetY - yOffset) * easing;
+    
+    setTranslate(xOffset, yOffset, cocktailImage);
+    
+    const distance = Math.sqrt(xOffset * xOffset + yOffset * yOffset);
+    if(distance > 0.5) {
+      animationFrame = requestAnimationFrame(animateReturn);
+    } else {
+      xOffset = 0;
+      yOffset = 0;
+      setTranslate(0, 0, cocktailImage);
+      animationFrame = null;
+      cocktailImage.style.animation = 'float-image 8s ease-in-out infinite';
+    }
+  }
+  
+  animateReturn();
+}
+</script>
+</body>
+</html>

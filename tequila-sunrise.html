@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tequila Sunrise | Harmonic Collection Cocktail Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=Jacquarda+Bastarda+9&family=Jersey+10&family=Limelight&family=Petit+Formal+Script&family=Plaster&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#ff3b3b;
+  --orange:#ff8c42;
+  --yellow:#ffd93d;
+  --dark:#2b0504;
+  --gap:1.5rem;
+  --radius:1rem;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    linear-gradient(180deg, 
+      #8b1a1a 0%,
+      #a63a1a 15%,
+      #b85a1a 30%,
+      #c97a1a 45%,
+      #d99a1a 60%,
+      #e5b01a 75%,
+      #e8c01a 90%,
+      #0a0000 100%
+    );
+  background-size:100% 100%;
+  color:#fff;
+  font-family:monospace;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100vh;
+  padding:var(--gap);
+  padding-top:calc(var(--gap) * 5);
+  padding-bottom:calc(var(--gap) * 2);
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:auto;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+html{
+  scroll-behavior:smooth;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.02) 2px,
+      rgba(255,255,255,0.02) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.02) 2px,
+      rgba(255,255,255,0.02) 4px
+    );
+  pointer-events:none;
+  z-index:0;
+  opacity:0.5;
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 30%, rgba(232,192,26,0.15), transparent 60%);
+  animation:pulse 8s ease-in-out infinite;
+  z-index:0;
+  pointer-events:none;
+}
+@keyframes pulse{
+  0%, 100%{opacity:0.5;transform:scale(1);}
+  50%{opacity:0.8;transform:scale(1.1);}
+}
+.back-btn{
+  position:fixed;
+  top:2rem;
+  left:2rem;
+  z-index:20;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  text-decoration:none;
+  font-size:0.9rem;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.back-btn:hover{
+  background:rgba(0,0,0,0.9);
+  transform:translateX(-5px);
+  border-color:var(--orange);
+}
+.back-btn::before{
+  content:'←';
+  font-size:1.2rem;
+}
+.card{
+  width:100%;
+  max-width:420px;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  margin-bottom:calc(var(--gap) * 8);
+}
+.stripes{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+}
+.stripes span{
+  flex:1;
+  transition:transform .35s ease;
+}
+.stripes .red{background:var(--red);}
+.stripes .orange{background:var(--orange);}
+.stripes .yellow{background:var(--yellow);}
+.card:hover .red{transform:translateX(-4px);}
+.card:hover .yellow{transform:translateX(4px);}
+
+.content{
+  position:relative;
+  z-index:3;
+  padding:var(--gap);
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  color:var(--dark);
+  padding:.25rem .5rem;
+  border-radius:.25rem;
+  font-size:.75rem;
+}
+h2{
+  font-size:1.75rem;
+  margin:.5rem 0 0;
+  font-family:"Limelight", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.story{
+  font-family:'Ma Shan Zheng',cursive;
+  font-size:1.15rem;
+  line-height:1.8;
+  margin:1rem 0 1.5rem;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.ratio{font-size:.9rem;color:#ccc}
+
+details{
+  display:inline-block;
+}
+summary{
+  list-style:none;
+  background:var(--orange);
+  color:#000;
+  padding:.5rem 1rem;
+  font-weight:600;
+  letter-spacing:1px;
+  border-radius:.25rem;
+  cursor:pointer;
+  transition:background .25s;
+}
+summary:hover{background:#fff;}
+summary::-webkit-details-marker{display:none}
+
+.recipe{
+  margin-top:1rem;
+  padding:1rem;
+  border:1px solid var(--orange);
+  border-radius:.5rem;
+  background:rgba(0,0,0,.5);
+}
+.recipe h3{font-size:1.1rem;margin-bottom:.5rem}
+.recipe p{margin:.25rem 0}
+small{display:block;margin-top:.5rem;color:#aaa}
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+
+.pixel-decoration{
+  position:fixed;
+  width:clamp(200px, 25vw, 400px);
+  height:clamp(200px, 25vw, 400px);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity:0.7;
+  z-index:5;
+  pointer-events:auto;
+  cursor:pointer;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  transition:transform 0.4s ease, opacity 0.3s ease, visibility 0.3s ease;
+  visibility:visible;
+}
+.pixel-decoration.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.pixel-decoration.cocktail{
+  background-image:url('pixel-cocktail.png');
+  top:5%;
+  right:8%;
+}
+.pixel-decoration.tequila{
+  background-image:url('pixel-tequila.png');
+  top:8%;
+  left:3%;
+}
+.pixel-decoration.orange{
+  background-image:url('pixel-orange.png');
+  top:12%;
+  right:15%;
+}
+.pixel-decoration.cocktail:hover{
+  transform:translateY(-20px) rotate(10deg) scale(1.15);
+  opacity:0.95;
+}
+.pixel-decoration.tequila:hover{
+  transform:translateX(20px) rotate(-10deg) scale(1.15);
+  opacity:0.95;
+}
+.pixel-decoration.orange:hover{
+  transform:translateY(20px) rotate(15deg) scale(1.15);
+  opacity:0.95;
+}
+@media (max-width:768px){
+  .pixel-decoration{
+    width:clamp(120px, 20vw, 250px);
+    height:clamp(120px, 20vw, 250px);
+  }
+}
+@media (max-width:480px){
+  .pixel-decoration{
+    width:clamp(100px, 18vw, 200px);
+    height:clamp(100px, 18vw, 200px);
+  }
+}
+.game-section{
+  width:100%;
+  max-width:1200px;
+  margin-top:calc(var(--gap) * 10);
+  padding:var(--gap);
+  position:relative;
+  z-index:0;
+  box-sizing:border-box;
+}
+.game-container{
+  background:url('bar-scene.png') center/cover no-repeat;
+  border-radius:var(--radius);
+  padding:2rem;
+  border:3px solid rgba(255,140,0,0.4);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  position:relative;
+  overflow:visible;
+  box-sizing:border-box;
+  width:100%;
+}
+.game-container::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  z-index:0;
+}
+.game-container > *{
+  position:relative;
+  z-index:1;
+}
+.game-title{
+  font-size:2.5rem;
+  font-family:"Jersey 10", sans-serif;
+  font-weight:400;
+  font-style:normal;
+  color:rgba(255,140,0,0.9);
+  text-align:center;
+  margin-bottom:1rem;
+  text-shadow:0 0 20px rgba(255,140,0,0.5);
+  letter-spacing:1px;
+}
+.game-instructions{
+  text-align:center;
+  color:#aaa;
+  font-size:1.2rem;
+  margin-bottom:1.5rem;
+  font-family:"Jersey 10", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.game-workspace{
+  display:grid;
+  grid-template-columns:0.8fr 1.1fr 1.1fr;
+  gap:1.5rem;
+  margin-bottom:1.5rem;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+.ingredients-area{
+  background:rgba(0,0,0,0.5);
+  border:2px solid rgba(255,140,0,0.5);
+  border-radius:0.5rem;
+  padding:1rem;
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+.ingredients-title{
+  font-size:1.4rem;
+  color:rgba(255,140,0,0.9);
+  margin-bottom:1rem;
+  text-align:center;
+  font-weight:400;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+}
+.ingredients-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:1rem;
+  width:100%;
+  box-sizing:border-box;
+}
+.ingredient-item{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,140,0,0.2);
+  border-radius:0.5rem;
+  padding:0.75rem;
+  cursor:grab;
+  text-align:center;
+  transition:transform 0.2s, box-shadow 0.2s;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  overflow:hidden;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.ingredient-item:active{
+  cursor:grabbing;
+}
+.ingredient-item:hover{
+  transform:scale(1.05);
+  box-shadow:0 5px 15px rgba(255,140,0,0.4);
+}
+.ingredient-item.dragging{
+  opacity:0.5;
+  transform:scale(0.9);
+}
+.ingredient-item.used{
+  opacity:0.3;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+.ingredient-image{
+  width:100%;
+  max-width:100%;
+  height:auto;
+  aspect-ratio:1;
+  max-height:160px;
+  margin:0 auto 0.5rem;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+.ingredient-name{
+  font-size:1.2rem;
+  color:rgba(255,140,0,1);
+  font-weight:400;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  text-shadow:0 0 10px rgba(255,140,0,0.5);
+}
+.shaker-area{
+  background:rgba(0,0,0,0.3);
+  border:2px solid rgba(255,140,0,0.3);
+  border-radius:0.5rem;
+  padding:0.75rem;
+  min-height:400px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  min-width:0;
+  box-sizing:border-box;
+  overflow:visible;
+}
+.shaker-title{
+  font-size:1.4rem;
+  color:rgba(255,140,0,0.9);
+  margin-bottom:1rem;
+  text-align:center;
+  font-weight:400;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+}
+.shaker-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:450px;
+}
+.shaker{
+  width:280px;
+  height:360px;
+  position:relative;
+  margin:1rem 0;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+.shaker-content{
+  position:absolute;
+  bottom:40px;
+  left:70px;
+  right:70px;
+  background:transparent;
+  border-radius:5px;
+  transition:height 0.3s ease;
+  pointer-events:none;
+}
+.shaker-content.tequila{
+  background:rgba(255,200,100,0.7);
+  height:25%;
+}
+.shaker-content.orange{
+  background:rgba(255,165,0,0.7);
+  height:50%;
+}
+.shaker-content.grenadine{
+  background:rgba(255,0,0,0.7);
+  height:8%;
+}
+.glass-area{
+  background:rgba(0,0,0,0.3);
+  border:2px solid rgba(255,140,0,0.3);
+  border-radius:0.5rem;
+  padding:0.75rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:0;
+  box-sizing:border-box;
+  overflow:visible;
+}
+.glass-title{
+  font-size:1.4rem;
+  color:rgba(255,140,0,0.9);
+  margin-bottom:1rem;
+  text-align:center;
+  font-weight:400;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+}
+.glass-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:400px;
+  margin-bottom:1rem;
+}
+.glass{
+  width:240px;
+  height:360px;
+  position:relative;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+.glass-content{
+  position:absolute;
+  bottom:35px;
+  left:50px;
+  right:50px;
+  background:transparent;
+  border-radius:5px 5px 0 0;
+  transition:height 0.3s ease;
+  pointer-events:none;
+}
+.glass-content.tequila{
+  background:rgba(255,200,100,0.8);
+  height:25%;
+}
+.glass-content.orange{
+  background:rgba(255,165,0,0.8);
+  height:50%;
+}
+.glass-content.grenadine{
+  background:rgba(255,0,0,0.8);
+  height:8%;
+}
+.pour-btn{
+  background:linear-gradient(135deg, rgba(255,140,0,0.9), rgba(255,100,0,0.8));
+  color:#fff;
+  border:none;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  font-size:1.2rem;
+  font-weight:400;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(255,140,0,0.4);
+  transition:transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+}
+.pour-btn:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(255,140,0,0.6);
+}
+.pour-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+.shake-btn{
+  background:linear-gradient(135deg, rgba(255,140,0,0.9), rgba(255,100,0,0.8));
+  color:#fff;
+  border:none;
+  padding:0.75rem 1.5rem;
+  border-radius:2rem;
+  font-size:1.2rem;
+  font-weight:400;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(255,140,0,0.4);
+  transition:transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+  font-family:"Jersey 10", sans-serif;
+  font-style:normal;
+  margin-top:1rem;
+  width:100%;
+}
+.shake-btn:hover:not(:disabled){
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(255,140,0,0.6);
+}
+.shake-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+.shaker.shaking{
+  animation:shakeShaker 0.3s ease-in-out;
+}
+@keyframes shakeShaker{
+  0%, 100%{transform:translateX(0) rotate(0deg);}
+  25%{transform:translateX(-15px) rotate(-10deg);}
+  50%{transform:translateX(0) rotate(0deg);}
+  75%{transform:translateX(15px) rotate(10deg);}
+}
+.progress-indicator{
+  margin-top:1rem;
+  text-align:center;
+  color:#aaa;
+  font-size:1.1rem;
+  font-family:"Jersey 10", sans-serif;
+  font-weight:400;
+  font-style:normal;
+}
+.progress-steps{
+  display:flex;
+  justify-content:center;
+  gap:0.5rem;
+  margin-top:0.5rem;
+}
+.progress-step{
+  width:40px;
+  height:40px;
+  border:2px solid rgba(255,140,0,0.4);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.3);
+  font-size:1rem;
+  color:#aaa;
+}
+.progress-step.completed{
+  background:rgba(255,140,0,0.6);
+  border-color:rgba(255,140,0,0.9);
+  color:#fff;
+}
+.victory-screen{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:url('bar-scene.png') center/cover no-repeat;
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.victory-screen::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:1;
+}
+.victory-screen.show{
+  display:flex;
+  animation:fadeIn 0.5s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+.victory-content{
+  text-align:center;
+  padding:2rem;
+  position:relative;
+  z-index:2;
+  background:rgba(0,0,0,0.7);
+  border-radius:var(--radius);
+  border:2px solid rgba(255,140,0,0.5);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.victory-title{
+  font-size:2rem;
+  font-family:"Limelight", sans-serif;
+  color:rgba(255,140,0,0.9);
+  margin-bottom:1rem;
+  text-shadow:0 0 20px rgba(255,140,0,0.5);
+}
+.victory-cocktail{
+  width:150px;
+  height:150px;
+  margin:1rem auto;
+  background-image:url('pixel-cocktail.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+  animation:float 2s ease-in-out infinite;
+}
+@keyframes float{
+  0%, 100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+.victory-message{
+  color:#fff;
+  font-size:1.1rem;
+  margin:1rem 0;
+}
+.restart-btn{
+  background:linear-gradient(135deg, rgba(255,140,0,0.9), rgba(255,100,0,0.8));
+  color:#fff;
+  border:none;
+  padding:0.75rem 2rem;
+  border-radius:2rem;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:1rem;
+  box-shadow:0 5px 15px rgba(255,140,0,0.4);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  font-family:"Limelight", sans-serif;
+}
+.restart-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(255,140,0,0.6);
+}
+@media (max-width:1200px){
+  .game-section{
+    max-width:95%;
+  }
+  .game-workspace{
+    gap:0.75rem;
+  }
+  .ingredients-area,
+  .shaker-area,
+  .glass-area{
+    padding:0.5rem;
+  }
+}
+@media (max-width:1024px){
+  .game-workspace{
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width:768px){
+  .ingredients-grid{
+    grid-template-columns:repeat(3, 1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+<a href="home.html" class="back-btn">Back to Menu</a>
+<div class="pixel-decoration cocktail"></div>
+<div class="pixel-decoration tequila"></div>
+<div class="pixel-decoration orange"></div>
+<div class="card">
+  <div class="stripes">
+    <span class="red"></span>
+    <span class="orange"></span>
+    <span class="yellow"></span>
+  </div>
+
+  <div class="content">
+    <div>
+      <span class="badge">No.04 Classic Cocktail</span>
+      <h2>Tequila Sunrise</h2>
+    </div>
+
+    <p class="story">
+    Tequila Sunrise is a classic layered cocktail made with tequila, orange juice, and grenadine.<br>
+    <br>
+    Its red-to-orange gradient looks like a sunrise, with sweet citrus up front and a gentle agave warmth underneath.
+    </p>
+
+    <div class="footer">
+      <span class="ratio">Layered</span>
+      <details>
+        <summary>▶ View Recipe</summary>
+        <div class="recipe">
+          <h3>Tequila Sunrise Recipe</h3>
+          <p>Tequila 45 ml</p>
+          <p>Orange juice 90 ml</p>
+          <p>Grenadine 15 ml</p>
+          <small>Build over ice / Highball glass / Orange slice & cherry garnish</small>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="game-section">
+  <div class="game-container">
+    <h3 class="game-title">Mixology Master</h3>
+    <p class="game-instructions">Drag ingredients into the shaker, then pour into the glass to make a Tequila Sunrise!</p>
+    
+    <div class="game-workspace">
+      <div class="ingredients-area">
+        <div class="ingredients-title">INGREDIENTS</div>
+        <div class="ingredients-grid">
+          <div class="ingredient-item" draggable="true" data-ingredient="tequila">
+            <div class="ingredient-image" style="background-image:url('pixel-tequila.png');"></div>
+            <div class="ingredient-name">TEQUILA</div>
+          </div>
+          <div class="ingredient-item" draggable="true" data-ingredient="orange">
+            <div class="ingredient-image" style="background-image:url('pixel-orange.png');"></div>
+            <div class="ingredient-name">ORANGE</div>
+          </div>
+          <div class="ingredient-item" draggable="true" data-ingredient="grenadine">
+            <div class="ingredient-image" style="background-image:url('syrup.png'); background-size:contain;"></div>
+            <div class="ingredient-name">GRENADINE</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="shaker-area">
+        <div class="shaker-title">SHAKER</div>
+        <div class="shaker-wrapper">
+          <div class="shaker" id="shaker" style="background-image:url('shaker.png'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:transparent; border:none; box-shadow:none;">
+            <div class="shaker-content" id="shakerContent"></div>
+          </div>
+        </div>
+        <div class="progress-indicator">
+          <div>Progress:</div>
+          <div class="progress-steps">
+            <div class="progress-step" id="step1">1</div>
+            <div class="progress-step" id="step2">2</div>
+            <div class="progress-step" id="step3">3</div>
+          </div>
+        </div>
+        <button class="shake-btn" id="shakeBtn" disabled>SHAKE SHAKER</button>
+      </div>
+      
+      <div class="glass-area">
+        <div class="glass-title">GLASS</div>
+        <div class="glass-wrapper">
+          <div class="glass" id="glass" style="background-image:url('glass.png'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:transparent; border:none; box-shadow:none;">
+            <div class="glass-content" id="glassContent"></div>
+          </div>
+        </div>
+        <button class="pour-btn" id="pourBtn" disabled>POUR INTO GLASS</button>
+      </div>
+    </div>
+    
+    <div class="victory-screen" id="victoryScreen">
+      <div class="victory-content">
+        <h2 class="victory-title">SUCCESS!</h2>
+        <div class="victory-cocktail"></div>
+        <p class="victory-message">You made a perfect Tequila Sunrise!</p>
+        <button class="restart-btn" onclick="restartGame()">Play Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const ingredients = document.querySelectorAll('.ingredient-item');
+  const shaker = document.getElementById('shaker');
+  const shakerContent = document.getElementById('shakerContent');
+  const glass = document.getElementById('glass');
+  const glassContent = document.getElementById('glassContent');
+  const shakeBtn = document.getElementById('shakeBtn');
+  const pourBtn = document.getElementById('pourBtn');
+  const victoryScreen = document.getElementById('victoryScreen');
+  
+  let addedIngredients = {
+    tequila: false,
+    orange: false,
+    grenadine: false
+  };
+  
+  let shaken = false;
+  let pouredToGlass = false;
+  let currentStep = 0;
+  const correctOrder = ['tequila', 'orange', 'grenadine'];
+  
+  ingredients.forEach(ingredient => {
+    ingredient.addEventListener('dragstart', (e) => {
+      if (ingredient.classList.contains('used')) {
+        e.preventDefault();
+        return;
+      }
+      e.dataTransfer.setData('text/plain', ingredient.dataset.ingredient);
+      ingredient.classList.add('dragging');
+    });
+    
+    ingredient.addEventListener('dragend', (e) => {
+      ingredient.classList.remove('dragging');
+    });
+  });
+  
+  shaker.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    shaker.style.borderColor = 'rgba(255,140,0,0.8)';
+  });
+  
+  shaker.addEventListener('dragleave', (e) => {
+    shaker.style.borderColor = 'rgba(255,140,0,0.3)';
+  });
+  
+  shaker.addEventListener('drop', (e) => {
+    e.preventDefault();
+    shaker.style.borderColor = 'rgba(255,140,0,0.3)';
+    
+    const ingredientType = e.dataTransfer.getData('text/plain');
+    const ingredientElement = document.querySelector(`[data-ingredient="${ingredientType}"]`);
+    
+    if (!ingredientElement || ingredientElement.classList.contains('used')) {
+      return;
+    }
+    
+    if (ingredientType !== correctOrder[currentStep]) {
+      shaker.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        shaker.style.animation = '';
+      }, 500);
+      return;
+    }
+    
+    addIngredient(ingredientType, ingredientElement);
+  });
+  
+  function addIngredient(type, element) {
+    if (addedIngredients[type]) {
+      return;
+    }
+    
+    addedIngredients[type] = true;
+    element.classList.add('used');
+    
+    const layer = document.createElement('div');
+    layer.className = `shaker-content ${type}`;
+    shakerContent.appendChild(layer);
+    
+    currentStep++;
+    const stepElement = document.getElementById(`step${currentStep}`);
+    if (stepElement) {
+      stepElement.classList.add('completed');
+    }
+    
+    if (currentStep === 3) {
+      shakeBtn.disabled = false;
+    }
+  }
+  
+  shakeBtn.addEventListener('click', () => {
+    if (currentStep === 3 && !shaken) {
+      shakeBtn.disabled = true;
+      shakeBtn.textContent = 'SHAKING...';
+      
+      let shakeCount = 0;
+      const maxShakes = 6;
+      
+      function performShake() {
+        shaker.classList.add('shaking');
+        
+        setTimeout(() => {
+          shaker.classList.remove('shaking');
+          shakeCount++;
+          
+          if (shakeCount < maxShakes) {
+            setTimeout(performShake, 200);
+          } else {
+            shaken = true;
+            shakeBtn.textContent = 'SHAKEN!';
+            pourBtn.disabled = false;
+          }
+        }, 300);
+      }
+      
+      performShake();
+    }
+  });
+  
+  pourBtn.addEventListener('click', () => {
+    if (currentStep === 3 && shaken && !pouredToGlass) {
+      const layers = shakerContent.querySelectorAll('.shaker-content');
+      layers.forEach(layer => {
+        const type = layer.classList.contains('tequila') ? 'tequila' :
+                     layer.classList.contains('orange') ? 'orange' : 'grenadine';
+        const glassLayer = document.createElement('div');
+        glassLayer.className = `glass-content ${type}`;
+        glassContent.appendChild(glassLayer);
+      });
+      
+      shakerContent.innerHTML = '';
+      
+      pouredToGlass = true;
+      pourBtn.disabled = true;
+      pourBtn.textContent = 'POURED!';
+      
+      setTimeout(() => {
+        showVictory();
+      }, 1000);
+    }
+  });
+  
+  function showVictory() {
+    victoryScreen.classList.add('show');
+  }
+  
+  window.restartGame = function() {
+    addedIngredients = {
+      tequila: false,
+      orange: false,
+      grenadine: false
+    };
+    shaken = false;
+    pouredToGlass = false;
+    currentStep = 0;
+    
+    shakerContent.innerHTML = '';
+    glassContent.innerHTML = '';
+    shaker.classList.remove('shaking');
+    
+    ingredients.forEach(ingredient => {
+      ingredient.classList.remove('used');
+    });
+    
+    for (let i = 1; i <= 3; i++) {
+      const stepElement = document.getElementById(`step${i}`);
+      if (stepElement) {
+        stepElement.classList.remove('completed');
+      }
+    }
+    
+    shakeBtn.disabled = true;
+    shakeBtn.textContent = 'SHAKE SHAKER';
+    pourBtn.disabled = true;
+    pourBtn.textContent = 'POUR INTO GLASS';
+    
+    victoryScreen.classList.remove('show');
+  };
+  
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+(function() {
+  function initScrollHide() {
+    const decorations = document.querySelectorAll('.pixel-decoration');
+    const gameSection = document.querySelector('.game-section');
+    const card = document.querySelector('.card');
+    
+    if (!gameSection || !card || decorations.length === 0) {
+      setTimeout(initScrollHide, 100);
+      return;
+    }
+    
+    function handleScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const cardRect = card.getBoundingClientRect();
+      const gameRect = gameSection.getBoundingClientRect();
+      
+      const shouldHide = gameRect.top < window.innerHeight * 0.5 || scrollY > cardRect.bottom + 100;
+      
+      decorations.forEach(decoration => {
+        if (shouldHide) {
+          decoration.classList.add('hidden');
+        } else {
+          decoration.classList.remove('hidden');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollHide);
+  } else {
+    initScrollHide();
+  }
+})();
+</script>
+</body>
+</html>
+
+
