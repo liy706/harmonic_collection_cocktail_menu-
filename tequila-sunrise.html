@@ -139,7 +139,6 @@ body::after{
 .stripes .yellow{background:var(--yellow);}
 .card:hover .red{transform:translateX(-4px);}
 .card:hover .yellow{transform:translateX(4px);}
-
 .content{
   position:relative;
   z-index:3;
@@ -172,7 +171,6 @@ h2{
   align-items:center;
 }
 .ratio{font-size:.9rem;color:#ccc}
-
 details{
   display:inline-block;
 }
@@ -189,7 +187,6 @@ summary{
 }
 summary:hover{background:#fff;}
 summary::-webkit-details-marker{display:none}
-
 .recipe{
   margin-top:1rem;
   padding:1rem;
@@ -202,7 +199,6 @@ summary::-webkit-details-marker{display:none}
 small{display:block;margin-top:.5rem;color:#aaa}
 @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
-
 .pixel-decoration{
   position:fixed;
   width:clamp(200px, 25vw, 400px);
@@ -740,9 +736,8 @@ small{display:block;margin-top:.5rem;color:#aaa}
 }
 </style>
 </head>
-
 <body>
-<a href="home.html" class="back-btn">Back to Menu</a>
+<a href="index.html" class="back-btn">Back to Menu</a>
 <div class="pixel-decoration cocktail"></div>
 <div class="pixel-decoration tequila"></div>
 <div class="pixel-decoration orange"></div>
@@ -752,19 +747,16 @@ small{display:block;margin-top:.5rem;color:#aaa}
     <span class="orange"></span>
     <span class="yellow"></span>
   </div>
-
   <div class="content">
     <div>
       <span class="badge">No.04 Classic Cocktail</span>
       <h2>Tequila Sunrise</h2>
     </div>
-
     <p class="story">
     Tequila Sunrise is a classic layered cocktail made with tequila, orange juice, and grenadine.<br>
     <br>
     Its red-to-orange gradient looks like a sunrise, with sweet citrus up front and a gentle agave warmth underneath.
     </p>
-
     <div class="footer">
       <span class="ratio">Layered</span>
       <details>
@@ -780,12 +772,10 @@ small{display:block;margin-top:.5rem;color:#aaa}
     </div>
   </div>
 </div>
-
 <div class="game-section">
   <div class="game-container">
     <h3 class="game-title">Mixology Master</h3>
     <p class="game-instructions">Drag ingredients into the shaker, then pour into the glass to make a Tequila Sunrise!</p>
-    
     <div class="game-workspace">
       <div class="ingredients-area">
         <div class="ingredients-title">INGREDIENTS</div>
@@ -804,7 +794,6 @@ small{display:block;margin-top:.5rem;color:#aaa}
           </div>
         </div>
       </div>
-      
       <div class="shaker-area">
         <div class="shaker-title">SHAKER</div>
         <div class="shaker-wrapper">
@@ -822,7 +811,6 @@ small{display:block;margin-top:.5rem;color:#aaa}
         </div>
         <button class="shake-btn" id="shakeBtn" disabled>SHAKE SHAKER</button>
       </div>
-      
       <div class="glass-area">
         <div class="glass-title">GLASS</div>
         <div class="glass-wrapper">
@@ -833,7 +821,6 @@ small{display:block;margin-top:.5rem;color:#aaa}
         <button class="pour-btn" id="pourBtn" disabled>POUR INTO GLASS</button>
       </div>
     </div>
-    
     <div class="victory-screen" id="victoryScreen">
       <div class="victory-content">
         <h2 class="victory-title">SUCCESS!</h2>
@@ -844,7 +831,6 @@ small{display:block;margin-top:.5rem;color:#aaa}
     </div>
   </div>
 </div>
-
 <script>
 (function() {
   const ingredients = document.querySelectorAll('.ingredient-item');
@@ -855,18 +841,15 @@ small{display:block;margin-top:.5rem;color:#aaa}
   const shakeBtn = document.getElementById('shakeBtn');
   const pourBtn = document.getElementById('pourBtn');
   const victoryScreen = document.getElementById('victoryScreen');
-  
   let addedIngredients = {
     tequila: false,
     orange: false,
     grenadine: false
   };
-  
   let shaken = false;
   let pouredToGlass = false;
   let currentStep = 0;
   const correctOrder = ['tequila', 'orange', 'grenadine'];
-  
   ingredients.forEach(ingredient => {
     ingredient.addEventListener('dragstart', (e) => {
       if (ingredient.classList.contains('used')) {
@@ -876,32 +859,25 @@ small{display:block;margin-top:.5rem;color:#aaa}
       e.dataTransfer.setData('text/plain', ingredient.dataset.ingredient);
       ingredient.classList.add('dragging');
     });
-    
     ingredient.addEventListener('dragend', (e) => {
       ingredient.classList.remove('dragging');
     });
   });
-  
   shaker.addEventListener('dragover', (e) => {
     e.preventDefault();
     shaker.style.borderColor = 'rgba(255,140,0,0.8)';
   });
-  
   shaker.addEventListener('dragleave', (e) => {
     shaker.style.borderColor = 'rgba(255,140,0,0.3)';
   });
-  
   shaker.addEventListener('drop', (e) => {
     e.preventDefault();
     shaker.style.borderColor = 'rgba(255,140,0,0.3)';
-    
     const ingredientType = e.dataTransfer.getData('text/plain');
     const ingredientElement = document.querySelector(`[data-ingredient="${ingredientType}"]`);
-    
     if (!ingredientElement || ingredientElement.classList.contains('used')) {
       return;
     }
-    
     if (ingredientType !== correctOrder[currentStep]) {
       shaker.style.animation = 'shake 0.5s';
       setTimeout(() => {
@@ -909,48 +885,37 @@ small{display:block;margin-top:.5rem;color:#aaa}
       }, 500);
       return;
     }
-    
     addIngredient(ingredientType, ingredientElement);
   });
-  
   function addIngredient(type, element) {
     if (addedIngredients[type]) {
       return;
     }
-    
     addedIngredients[type] = true;
     element.classList.add('used');
-    
     const layer = document.createElement('div');
     layer.className = `shaker-content ${type}`;
     shakerContent.appendChild(layer);
-    
     currentStep++;
     const stepElement = document.getElementById(`step${currentStep}`);
     if (stepElement) {
       stepElement.classList.add('completed');
     }
-    
     if (currentStep === 3) {
       shakeBtn.disabled = false;
     }
   }
-  
   shakeBtn.addEventListener('click', () => {
     if (currentStep === 3 && !shaken) {
       shakeBtn.disabled = true;
       shakeBtn.textContent = 'SHAKING...';
-      
       let shakeCount = 0;
       const maxShakes = 6;
-      
       function performShake() {
         shaker.classList.add('shaking');
-        
         setTimeout(() => {
           shaker.classList.remove('shaking');
           shakeCount++;
-          
           if (shakeCount < maxShakes) {
             setTimeout(performShake, 200);
           } else {
@@ -960,11 +925,9 @@ small{display:block;margin-top:.5rem;color:#aaa}
           }
         }, 300);
       }
-      
       performShake();
     }
   });
-  
   pourBtn.addEventListener('click', () => {
     if (currentStep === 3 && shaken && !pouredToGlass) {
       const layers = shakerContent.querySelectorAll('.shaker-content');
@@ -975,23 +938,18 @@ small{display:block;margin-top:.5rem;color:#aaa}
         glassLayer.className = `glass-content ${type}`;
         glassContent.appendChild(glassLayer);
       });
-      
       shakerContent.innerHTML = '';
-      
       pouredToGlass = true;
       pourBtn.disabled = true;
       pourBtn.textContent = 'POURED!';
-      
       setTimeout(() => {
         showVictory();
       }, 1000);
     }
   });
-  
   function showVictory() {
     victoryScreen.classList.add('show');
   }
-  
   window.restartGame = function() {
     addedIngredients = {
       tequila: false,
@@ -1001,30 +959,24 @@ small{display:block;margin-top:.5rem;color:#aaa}
     shaken = false;
     pouredToGlass = false;
     currentStep = 0;
-    
     shakerContent.innerHTML = '';
     glassContent.innerHTML = '';
     shaker.classList.remove('shaking');
-    
     ingredients.forEach(ingredient => {
       ingredient.classList.remove('used');
     });
-    
     for (let i = 1; i <= 3; i++) {
       const stepElement = document.getElementById(`step${i}`);
       if (stepElement) {
         stepElement.classList.remove('completed');
       }
     }
-    
     shakeBtn.disabled = true;
     shakeBtn.textContent = 'SHAKE SHAKER';
     pourBtn.disabled = true;
     pourBtn.textContent = 'POUR INTO GLASS';
-    
     victoryScreen.classList.remove('show');
   };
-  
   const style = document.createElement('style');
   style.textContent = `
     @keyframes shake {
@@ -1035,25 +987,20 @@ small{display:block;margin-top:.5rem;color:#aaa}
   `;
   document.head.appendChild(style);
 })();
-
 (function() {
   function initScrollHide() {
     const decorations = document.querySelectorAll('.pixel-decoration');
     const gameSection = document.querySelector('.game-section');
     const card = document.querySelector('.card');
-    
     if (!gameSection || !card || decorations.length === 0) {
       setTimeout(initScrollHide, 100);
       return;
     }
-    
     function handleScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
       const cardRect = card.getBoundingClientRect();
       const gameRect = gameSection.getBoundingClientRect();
-      
       const shouldHide = gameRect.top < window.innerHeight * 0.5 || scrollY > cardRect.bottom + 100;
-      
       decorations.forEach(decoration => {
         if (shouldHide) {
           decoration.classList.add('hidden');
@@ -1062,11 +1009,9 @@ small{display:block;margin-top:.5rem;color:#aaa}
         }
       });
     }
-    
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
   }
-  
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initScrollHide);
   } else {
@@ -1076,5 +1021,3 @@ small{display:block;margin-top:.5rem;color:#aaa}
 </script>
 </body>
 </html>
-
-
